@@ -6,6 +6,13 @@ textarea.focus()
 // keyup (when user presses down and then lets up)
 textarea.addEventListener('keyup', (e) => {
     createTags(e.target.value)
+    // if enter is pressed, after 10ms clear textarea and call randomSelect function
+    if(e.key === 'Enter') {
+        setTimeout(() => {
+            e.target.value = ''
+        }, 10);
+        randomSelect()
+    }
 })
 
 function createTags(input) {
@@ -23,4 +30,45 @@ function createTags(input) {
         tagElem.innerText = tag
         tagsElem.appendChild(tagElem)
     })
+}
+
+function randomSelect() {
+    // the number of times to hightlight each span until stopping
+    const times = 30
+    // pick a random tag every 100ms
+    const interval = setInterval(() => {
+        const randomTag = pickRandomTag()
+
+        // animates by highlighting and un-highlighting the spans randomly
+        highlightTag(randomTag)
+        
+        setTimeout(() => {
+            unHighlightTag(randomTag)
+        }, 100);
+    }, 100);
+    // stops the animation on a random tag
+    setTimeout(() => {
+        clearInterval(interval)
+
+        setTimeout(() => {
+            const randomTag = pickRandomTag()
+
+            highlightTag(randomTag)
+        }, 100);
+    }, times * 100);
+}
+
+function pickRandomTag() {
+    // brings all the spans in via a nodeList
+    const tags = document.querySelectorAll('.tag')
+    // (Math.floor)rounds down, (Math.random)random decimal multiplied by the length of the tags nodeList
+    return tags[Math.floor(Math.random() * tags.length)]
+}
+
+function highlightTag(tag) {
+    tag.classList.add('highlight')
+}
+
+function unHighlightTag(tag) {
+    tag.classList.remove('highlight')
 }
