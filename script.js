@@ -7,7 +7,7 @@ textarea.focus()
 textarea.addEventListener('keyup', (e) => {
     createTags(e.target.value)
     // if enter is pressed, after 10ms clear textarea and call randomSelect function
-    if(e.key === 'Enter') {
+    if (e.key === 'Enter') {
         setTimeout(() => {
             e.target.value = ''
         }, 10);
@@ -18,8 +18,8 @@ textarea.addEventListener('keyup', (e) => {
 function createTags(input) {
     // creates arrays (separated by the commas)
     const tags = input.split(',').filter
-    // .trim (trims white space) not equal to and empty string then return a new trimmed array
-    (tag => tag.trim() !== '').map(tag => tag.trim())
+        // .trim (trims white space) not equal to and empty string then return a new trimmed array
+        (tag => tag.trim() !== '').map(tag => tag.trim())
     // clears the tags element
     tagsElem.innerHTML = ''
 
@@ -41,7 +41,7 @@ function randomSelect() {
 
         // animates by highlighting and un-highlighting the spans randomly
         highlightTag(randomTag)
-        
+
         setTimeout(() => {
             unHighlightTag(randomTag)
         }, 100);
